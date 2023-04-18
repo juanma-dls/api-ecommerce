@@ -1,21 +1,21 @@
 class ProductsController < ApplicationController
   before_action :authenticate_user!
-  before_action :authenticate_user!, except: [:index]
+  skip_before_action :authenticate_user!, only: [:index]
   before_action :set_products, only: [:show, :update, :destroy]
 
   def index
     @products = Product.all
-    if @products != [ ]
+    if @products != []
       render json: @products, status: :ok
     else
       render json: {
-        status: {message: "No products found"}
+        status: { message: "No products found" }
       }, status: :unprocessable_entity
     end
   end
 
   def show
-    render :json, @prorduct, status: :ok
+    render json: @product, status: :ok
   end
 
   def create
@@ -37,13 +37,12 @@ class ProductsController < ApplicationController
   end
 
   def destroy
-    binding.break
     if @product.deleted == false
       if @product.soft_delete
         render json: { message: "Product deleted successfully" }
       else
         render json: {
-          status: {message: "The product could not be deleted"}
+          status: { message: "The product could not be deleted" }
         }, status: :unprocessable_entity
       end
     else
@@ -51,11 +50,10 @@ class ProductsController < ApplicationController
         render json: { message: "Product activated successfully" }
       else
         render json: {
-          status: {message: "The product could not be activated"}
+          status: { message: "The product could not be activated" }
         }, status: :unprocessable_entity
       end
     end
-
   end
 
   private
@@ -67,5 +65,4 @@ class ProductsController < ApplicationController
   def products_params
     params.require(:product).permit(:name, :description, :price, :deleted)
   end
-
 end
