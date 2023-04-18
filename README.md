@@ -1,24 +1,22 @@
-# README
+# API for E-commerce
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is an API made with Rails 7 and JWT created for an E-commerce project.
 
-Things you may want to cover:
+## Features
 
-* Ruby version
+The application includes the following features:
 
-* System dependencies
+- Browse products
+- Filter products by categories
+- Low logic products
 
-* Configuration
+## Installation
+### To run this application, you will need to have Rails 7 and Ruby version: 3.1.0. Once you have cloned the repository, run the following commands:
 
-* Database creation
+* `bundle install`
 
-* Database initialization
+* `rails:db create`
 
-* How to run the test suite
+* `rails:db migrate`
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* `rails s` (to run the server)
