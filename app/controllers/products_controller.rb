@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+  before_action :authenticate_user!
   before_action :authenticate_user!, except: [:index]
   before_action :set_products, only: [:show, :update, :destroy]
 
@@ -36,13 +37,25 @@ class ProductsController < ApplicationController
   end
 
   def destroy
-    if @product.soft_delete
-      render json: { message: "Product deleted successfully" }
+    binding.break
+    if @product.deleted == false
+      if @product.soft_delete
+        render json: { message: "Product deleted successfully" }
+      else
+        render json: {
+          status: {message: "The product could not be deleted"}
+        }, status: :unprocessable_entity
+      end
     else
-      ender json: {
-        status: {message: "The product could not be deleted"}
-      }, status: :unprocessable_entity
+      if @product.soft_delete
+        render json: { message: "Product activated successfully" }
+      else
+        render json: {
+          status: {message: "The product could not be activated"}
+        }, status: :unprocessable_entity
+      end
     end
+
   end
 
   private

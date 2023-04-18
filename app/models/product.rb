@@ -1,6 +1,6 @@
 class Product < ApplicationRecord
   def soft_delete
-    update(deleted: true)
+    update(deleted: !deleted)
   end
 
   def active?
